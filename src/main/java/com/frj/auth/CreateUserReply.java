@@ -1,7 +1,5 @@
 package com.frj.auth;
 
-import java.util.Objects;
-
 /**
  * Top level output.
  *
@@ -9,9 +7,13 @@ import java.util.Objects;
  */
 public class CreateUserReply {
 
-    private final String failureMessage;
+    private String failureMessage;
 
-    public CreateUserReply(final String failureMessage) {
-        this.failureMessage = Objects.requireNonNull(failureMessage);
+    public String getFailureMessage() {
+        return failureMessage;
+    }
+
+    public void setFailureMessage(final String failureMessage) {
+        this.failureMessage = failureMessage;
     }
 }
