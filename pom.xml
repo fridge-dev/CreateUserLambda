@@ -2,20 +2,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.frj</groupId>
+  <groupId>com.frj.auth</groupId>
   <artifactId>CreateUserLambda</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>AWS SDK for Java Sample</name>
-  <url>http://aws.amazon.com/sdkforjava</url>
+  <name>fridge-dev Auth - CreateUser API</name>
+  <url>https://github.com/fridge-dev</url>
 
   <dependencies>
+
+    <!-- This came with the template... I'll need DDB SDK back in a sec-->
+    <!--<dependency>-->
+      <!--<groupId>com.amazonaws</groupId>-->
+      <!--<artifactId>aws-java-sdk</artifactId>-->
+      <!--<version>1.11.721</version>-->
+    <!--</dependency>-->
+
+    <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core -->
     <dependency>
       <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk</artifactId>
-      <version>[1.7.2,2.0.0)</version>
+      <artifactId>aws-lambda-java-core</artifactId>
+      <version>1.2.0</version>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -23,7 +33,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>1.2.1</version>
+        <version>1.6.0</version>
         <executions>
           <execution>
             <goals>
@@ -32,7 +42,17 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>AwsSdkSample</mainClass>
+          <!-- Is Main class used by lambda? I don't think so.. -->
+          <mainClass>com.frj.auth.Main</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <source>7</source>
+          <target>7</target>
         </configuration>
       </plugin>
     </plugins>
