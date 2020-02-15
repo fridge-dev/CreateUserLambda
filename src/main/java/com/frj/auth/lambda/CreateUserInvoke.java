@@ -1,4 +1,4 @@
-package com.frj.auth;
+package com.frj.auth.lambda;
 
 import java.util.Objects;
 
@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * @author fridge
  */
-public class CreateUserRequest {
+public class CreateUserInvoke {
 
     private String username;
     private String password;

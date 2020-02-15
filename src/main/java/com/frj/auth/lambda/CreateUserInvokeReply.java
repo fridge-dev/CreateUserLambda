@@ -1,11 +1,11 @@
-package com.frj.auth;
+package com.frj.auth.lambda;
 
 /**
  * Top level output.
  *
  * @author fridge
  */
-public class CreateUserReply {
+public class CreateUserInvokeReply {
 
     private String failureMessage;
 
