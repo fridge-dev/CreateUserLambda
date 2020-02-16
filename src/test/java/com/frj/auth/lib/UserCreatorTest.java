@@ -1,7 +1,8 @@
 package com.frj.auth.lib;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.frj.auth.lib.dal.UserLoginDataAccessor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class UserCreatorTest {
 
     @BeforeEach
     void setup() {
-        userCreator = new UserCreator();
+        userCreator = new UserCreator(UserLoginDataAccessor.getAccessor(new FakeDynamoDBMapper()));
     }
 
     @Test
