@@ -6,6 +6,7 @@ import com.frj.auth.app.AppModule;
 import com.frj.auth.app.CreateUserHandler;
 import com.frj.auth.app.CreateUserReply;
 import com.frj.auth.app.CreateUserRequest;
+import java.util.concurrent.TimeUnit;
 
 /**
  * My first handler. *tear*
@@ -17,6 +18,16 @@ public class CreateUserLambdaHandler implements RequestHandler<CreateUserLambdaR
     private static final CreateUserHandler USER_CREATOR = AppModule.getInstance().getCreateUserHandler();
 
     public CreateUserLambdaReply handleRequest(final CreateUserLambdaRequest invoke, final Context context) {
+        final long start = System.nanoTime();
+        try {
+            return tryHandle(invoke);
+        } finally {
+            final long duration = System.nanoTime() - start;
+            System.out.println(String.format("Timing - CreateUserLambdaHandler#handleRequest: %sms", TimeUnit.NANOSECONDS.toMillis(duration)));
+        }
+    }
+
+    private CreateUserLambdaReply tryHandle(final CreateUserLambdaRequest invoke) {
         final CreateUserRequest createUserRequest = convertRequest(invoke);
         final CreateUserReply createUserReply = USER_CREATOR.createUser(createUserRequest);
         return convertReply(createUserReply);

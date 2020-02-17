@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.IDynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is responsible for adapting the {@link IDynamoDBMapper} from AWS SDK to the application.
@@ -48,7 +49,13 @@ public class DynamoDbAccessor<T extends DdbItem> {
      * Save item to DynamoDB with an Expression
      */
     public void saveItem(final T item, final DynamoDBSaveExpression expression) {
-        dynamoDbMapper.save(item, expression);
+        final long start = System.nanoTime();
+        try {
+            dynamoDbMapper.save(item, expression);
+        } finally {
+            final long duration = System.nanoTime() - start;
+            System.out.println(String.format("Timing - DynamoDbAccessor#saveItem: %sms", TimeUnit.NANOSECONDS.toMillis(duration)));
+        }
     }
 
     /**
