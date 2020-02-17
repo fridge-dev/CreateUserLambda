@@ -4,7 +4,7 @@ aws lambda invoke \
     --cli-binary-format raw-in-base64-out \
     --payload "{
         \"username\": \"$1\",
-        \"password\": \"fake-password-aspo8hgao8ehfa\",
+        \"password\": \"$2\",
         \"spec\": \"SIMPLE/PIN\"
     }" \
     $RESPONSE_JSON_FILE \
