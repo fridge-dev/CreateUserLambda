@@ -1,8 +1,8 @@
 package com.frj.auth.app;
 
-import com.frj.auth.app.dal.DataAccessor;
-import com.frj.auth.app.dal.UserLoginDataKey;
-import com.frj.auth.app.dal.UserLoginData;
+import com.frj.auth.app.dal.models.DataAccessor;
+import com.frj.auth.app.dal.models.UserLoginDataKey;
+import com.frj.auth.app.dal.models.UserLoginData;
 import java.util.Objects;
 
 /**

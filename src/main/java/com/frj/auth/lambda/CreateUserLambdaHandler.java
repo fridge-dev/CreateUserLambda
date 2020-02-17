@@ -2,10 +2,10 @@ package com.frj.auth.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.frj.auth.app.AppModule;
+import com.frj.auth.app.CreateUserHandler;
 import com.frj.auth.app.CreateUserReply;
 import com.frj.auth.app.CreateUserRequest;
-import com.frj.auth.app.Module;
-import com.frj.auth.app.CreateUserHandler;
 
 /**
  * My first handler. *tear*
@@ -14,7 +14,7 @@ import com.frj.auth.app.CreateUserHandler;
  */
 public class CreateUserLambdaHandler implements RequestHandler<CreateUserLambdaRequest, CreateUserLambdaReply> {
 
-    private static final CreateUserHandler USER_CREATOR = new Module().getUserCreator();
+    private static final CreateUserHandler USER_CREATOR = AppModule.getInstance().getCreateUserHandler();
 
     public CreateUserLambdaReply handleRequest(final CreateUserLambdaRequest invoke, final Context context) {
         final CreateUserRequest createUserRequest = convertRequest(invoke);

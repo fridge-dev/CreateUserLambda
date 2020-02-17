@@ -6,6 +6,9 @@ import com.frj.auth.app.dal.ddb.DdbExceptionTranslator;
 import com.frj.auth.app.dal.ddb.DdbExpressionFactory;
 import com.frj.auth.app.dal.ddb.DynamoDbAccessor;
 import com.frj.auth.app.dal.ddb.UserLoginCredsDdbItem;
+import com.frj.auth.app.dal.models.DataAccessor;
+import com.frj.auth.app.dal.models.UserLoginData;
+import com.frj.auth.app.dal.models.UserLoginDataKey;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -16,7 +19,7 @@ import java.util.Optional;
  *
  * @author fridge
  */
-public class UserLoginDataAccessor implements DataAccessor<UserLoginDataKey, UserLoginData> {
+/* TODO make private */ public final class UserLoginDataAccessor implements DataAccessor<UserLoginDataKey, UserLoginData> {
 
     private static final String CREATE_USER_CONDITION_FAILED_MESSAGE = "Failed to create user because username is already taken.";
 

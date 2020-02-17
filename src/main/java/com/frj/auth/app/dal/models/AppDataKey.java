@@ -1,4 +1,4 @@
-package com.frj.auth.app.dal;
+package com.frj.auth.app.dal.models;
 
 /**
  * Qualifier interface for {@link DataAccessor} unique keys.
