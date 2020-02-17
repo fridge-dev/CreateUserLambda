@@ -105,6 +105,10 @@
       <!-- Unit test execution -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
+        <!--
+             mvn version 3.3 (my current version) doesn't run JUnit 5 tests unless this version is specified.
+             https://dzone.com/articles/why-your-junit-5-tests-are-not-running-under-maven
+        -->
         <version>2.22.0</version>
         <configuration>
           <!--
