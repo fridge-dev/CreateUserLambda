@@ -3,6 +3,7 @@ package com.frj.auth.app;
 import com.frj.auth.app.dal.models.DataAccessor;
 import com.frj.auth.app.dal.models.UserLoginDataKey;
 import com.frj.auth.app.dal.models.UserLoginData;
+import com.frj.auth.app.specs.SpecValidator;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,8 @@ public class CreateUserHandler {
     }
 
     public CreateUserReply createUser(final CreateUserRequest createUserRequest) {
+        validateRequest(createUserRequest);
+
         userLoginDataAccessor.create(new UserLoginData(createUserRequest.getUsername(), createUserRequest.getPassword()));
 
         final String msg = String.format(
@@ -34,4 +37,12 @@ public class CreateUserHandler {
         return new CreateUserReply(msg);
     }
 
+    private void validateRequest(final CreateUserRequest request) {
+        if (!SpecValidator.isUsernameValid(request.getUsernameSpec(), request.getUsername())) {
+            throw new IllegalArgumentException("Provided username does not fulfill the required specifications.");
+        }
+        if (!SpecValidator.isPasswordValid(request.getPasswordSpec(), request.getPassword())) {
+            throw new IllegalArgumentException("Provided password does not fulfill the required specifications.");
+        }
+    }
 }

@@ -15,7 +15,7 @@
     <jacoco.threshold.method>0.80</jacoco.threshold.method>
     <jacoco.threshold.instruction>0.90</jacoco.threshold.instruction>
     <jacoco.threshold.line>0.80</jacoco.threshold.line>
-    <jacoco.threshold.branch>1.00</jacoco.threshold.branch>
+    <jacoco.threshold.branch>0.80</jacoco.threshold.branch>
     <jacoco.threshold.complexity>0.80</jacoco.threshold.complexity>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

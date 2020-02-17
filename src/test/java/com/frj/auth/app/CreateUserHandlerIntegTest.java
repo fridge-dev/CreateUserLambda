@@ -2,6 +2,7 @@ package com.frj.auth.app;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.frj.auth.app.dal.ddb.UserLoginCredsDdbItem;
 import com.frj.auth.app.dal.models.ConditionalWriteException;
@@ -28,7 +29,7 @@ public class CreateUserHandlerIntegTest {
     void createUser() {
         final CreateUserRequest req = new CreateUserRequest(
                 "user1",
-                "2345",
+                "23456",
                 CreateUserRequest.UsernameSpec.SIMPLE,
                 CreateUserRequest.PasswordSpec.PIN
         );
@@ -43,7 +44,7 @@ public class CreateUserHandlerIntegTest {
     void createUser_Duplicate() {
         final CreateUserRequest req = new CreateUserRequest(
                 "user1",
-                "2345",
+                "23456",
                 CreateUserRequest.UsernameSpec.SIMPLE,
                 CreateUserRequest.PasswordSpec.PIN
         );
@@ -52,4 +53,29 @@ public class CreateUserHandlerIntegTest {
         assertThrows(ConditionalWriteException.class, () -> createUserHandler.createUser(req));
     }
 
+    @Test
+    void createUser_InvalidUsernameSpec() {
+        final CreateUserRequest req = new CreateUserRequest(
+                "afoshaw48fhoa9j4fap9j4f",
+                "23456",
+                CreateUserRequest.UsernameSpec.SIMPLE,
+                CreateUserRequest.PasswordSpec.PIN
+        );
+
+        final IllegalArgumentException caught = assertThrows(IllegalArgumentException.class, () -> createUserHandler.createUser(req));
+        assertTrue(caught.getMessage().contains("username"));
+    }
+
+    @Test
+    void createUser_InvalidPasswordSpec() {
+        final CreateUserRequest req = new CreateUserRequest(
+                "user1",
+                "123-345",
+                CreateUserRequest.UsernameSpec.SIMPLE,
+                CreateUserRequest.PasswordSpec.PIN
+        );
+
+        final IllegalArgumentException caught = assertThrows(IllegalArgumentException.class, () -> createUserHandler.createUser(req));
+        assertTrue(caught.getMessage().contains("password"));
+    }
 }

@@ -20,7 +20,7 @@ class CreateUserHandlerTest {
     void test() {
         final CreateUserRequest req = new CreateUserRequest(
                 "user1",
-                "2345",
+                "23456",
                 CreateUserRequest.UsernameSpec.SIMPLE,
                 CreateUserRequest.PasswordSpec.PIN
         );
