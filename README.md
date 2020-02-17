@@ -12,7 +12,7 @@ Because I am too lazy to learn CloudFormation.
 
 Create the DynamoDB tables
 
-```
+```sh
 TABLE_NAME=UserLogin
 HASH_KEY=Username
 aws dynamodb create-table \
@@ -30,7 +30,7 @@ USER_LOGIN_TABLE_ARN=`aws dynamodb describe-table --table-name $TABLE_NAME | jq 
 1. Create the IAM resources with basic Lambda privileges (logs) and DDB PutItem
 1. Create the Lambda function
 
-```
+```sh
 FUNCTION_NAME=CreateUserHandler
 ```
 
@@ -38,7 +38,7 @@ FUNCTION_NAME=CreateUserHandler
 
 Create Policy
 
-```
+```sh
 [ -n "$FUNCTION_NAME" ] \
 && [ -n "$USER_LOGIN_TABLE_ARN" ] \
 && cat > ./$FUNCTION_NAME-Policy.txt <<EOL
@@ -77,7 +77,7 @@ aws iam get-policy-version --version-id v1 --policy-arn $POLICY_ARN
 
 Create Role
 
-```
+```sh
 [ -n "$FUNCTION_NAME" ] \
 && cat > ./$FUNCTION_NAME-Role.txt <<EOL
 {
@@ -106,7 +106,7 @@ aws iam get-role --role-name $ROLE_NAME
 
 Attach Policy to the Role
 
-```
+```sh
 [ -n "$FUNCTION_NAME" ] && \
 [ -n "$POLICY_ARN" ] && \
 aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn $POLICY_ARN
@@ -120,7 +120,7 @@ aws iam list-attached-role-policies --role-name $ROLE_NAME
 
 First run `mvn install` then create the function with the JAR.
 
-```
+```sh
 aws lambda create-function \
     --function-name $FUNCTION_NAME \
     --runtime java11 \
@@ -135,7 +135,7 @@ aws lambda create-function \
 
 **Config update**
 
-```
+```sh
 aws lambda update-function-configuration \
     --function-name CreateUserHandler \
     --handler com.frj.auth.lambda.CreateUserInvokeHandler
@@ -143,12 +143,12 @@ aws lambda update-function-configuration \
 
 **Code update**
 
-```
+```sh
 ./lambda-deploy-current-workspace.sh
 ```
 
 **Test Invoke**
 
-```
+```sh
 ./lambda-invoke-test.sh myusername 012345
 ```
