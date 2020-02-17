@@ -17,13 +17,13 @@ class UserLoginDataAccessorTest {
     private static final String USERNAME = "fridge";
     private static final String PASSWORD = "H^g97R%vk,";
 
-    private static final TestUtilLocalDalModuleFactory localDalModuleFactory = new TestUtilLocalDalModuleFactory(UserLoginCredsDdbItem.class);
+    private static final TestUtilLocalDalModuleFactory LOCAL_DAL_MODULE_FACTORY = new TestUtilLocalDalModuleFactory(UserLoginCredsDdbItem.class);
 
     private UserLoginDataAccessor accessor;
 
     @BeforeEach
     void setup() {
-        accessor = localDalModuleFactory.create().getUserLoginDataAccessor();
+        accessor = LOCAL_DAL_MODULE_FACTORY.create().getUserLoginDataAccessor();
     }
 
     @Test

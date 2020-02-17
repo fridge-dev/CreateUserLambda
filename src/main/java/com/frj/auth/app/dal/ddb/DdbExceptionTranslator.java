@@ -2,6 +2,7 @@ package com.frj.auth.app.dal.ddb;
 
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.frj.auth.app.dal.models.ConditionalWriteException;
+import com.frj.auth.app.dal.models.DataAccessLayerException;
 
 /**
  * This class is responsible for translating DynamoDB SDK exceptions to our custom DAL layer exceptions.
@@ -18,6 +19,8 @@ public class DdbExceptionTranslator {
             runnable.run();
         } catch (ConditionalCheckFailedException e) {
             throw new ConditionalWriteException(exceptionMessage, e);
+        } catch (RuntimeException e) {
+            throw new DataAccessLayerException("Unexpected failure while communicating with DynamoDB.", e);
         }
     }
 

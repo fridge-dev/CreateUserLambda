@@ -27,11 +27,11 @@ public final class AppModule {
 
     /* VisibleForTests */ static class Factory {
 
-        static AppModule create() {
+        private static AppModule create() {
             return create(DataAccessLayerModule.Factory.create());
         }
 
-        static AppModule create(final DataAccessLayerModule dalModule) {
+        /* VisibleForTests */ static AppModule create(final DataAccessLayerModule dalModule) {
             return new AppModule(
                     new CreateUserHandler(dalModule.getUserLoginDataAccessor())
             );

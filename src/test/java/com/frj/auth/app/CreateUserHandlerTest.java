@@ -3,6 +3,7 @@ package com.frj.auth.app;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.frj.auth.app.dal.UserLoginDataAccessor;
+import com.frj.auth.app.dal.ddb.NullDynamoDBMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class CreateUserHandlerTest {
 
     @BeforeEach
     void setup() {
-        createUserHandler = new CreateUserHandler(UserLoginDataAccessor.getAccessor(new FakeDynamoDBMapper()));
+        createUserHandler = new CreateUserHandler(UserLoginDataAccessor.getAccessor(new NullDynamoDBMapper()));
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.frj.auth.app;
+package com.frj.auth.app.dal.ddb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDeleteExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -24,11 +24,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO
+ * Should probably just use mockito... oh well
  *
- * @author TODO
+ * @author fridge
  */
-public class FakeDynamoDBMapper implements IDynamoDBMapper {
+public class NullDynamoDBMapper implements IDynamoDBMapper {
     @Override
     public <T> DynamoDBMapperTableModel<T> getTableModel(final Class<T> clazz) {
         return null;
