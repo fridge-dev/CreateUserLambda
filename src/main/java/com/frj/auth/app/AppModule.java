@@ -1,6 +1,7 @@
 package com.frj.auth.app;
 
 import com.frj.auth.app.dal.DataAccessLayerModule;
+import com.frj.auth.app.password.PasswordHasher;
 import java.util.Objects;
 
 /**
@@ -33,7 +34,7 @@ public final class AppModule {
 
         /* VisibleForTests */ static AppModule create(final DataAccessLayerModule dalModule) {
             return new AppModule(
-                    new CreateUserHandler(dalModule.getUserLoginDataAccessor())
+                    new CreateUserHandler(dalModule.getUserLoginDataAccessor(), PasswordHasher.Factory.create())
             );
         }
     }

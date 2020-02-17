@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.frj.auth.app.dal.UserLoginDataAccessor;
 import com.frj.auth.app.dal.ddb.NullDynamoDBMapper;
+import com.frj.auth.app.password.PasswordHasher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,8 @@ class CreateUserHandlerTest {
 
     @BeforeEach
     void setup() {
-        createUserHandler = new CreateUserHandler(UserLoginDataAccessor.getAccessor(new NullDynamoDBMapper()));
+        // TODO use mocks, this is not a UT, but an integ. and we already have one of those.
+        createUserHandler = new CreateUserHandler(UserLoginDataAccessor.getAccessor(new NullDynamoDBMapper()), PasswordHasher.Factory.create());
     }
 
     @Test
