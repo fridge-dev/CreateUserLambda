@@ -29,7 +29,7 @@ public class CreateUserHandler {
                 createUserRequest.getPasswordSpec()
         );
 
-        System.out.println(msg + " - sout");
+        System.out.println(msg);
 
         return new CreateUserReply(msg);
     }

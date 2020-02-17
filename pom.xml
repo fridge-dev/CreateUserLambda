@@ -11,12 +11,12 @@
   <url>https://github.com/fridge-dev</url>
 
   <properties>
-    <jacoco.threshold.class>0.00</jacoco.threshold.class>
-    <jacoco.threshold.method>0.00</jacoco.threshold.method>
-    <jacoco.threshold.instruction>0.00</jacoco.threshold.instruction>
-    <jacoco.threshold.line>0.00</jacoco.threshold.line>
-    <jacoco.threshold.branch>0.00</jacoco.threshold.branch>
-    <jacoco.threshold.complexity>0.00</jacoco.threshold.complexity>
+    <jacoco.threshold.class>1.00</jacoco.threshold.class>
+    <jacoco.threshold.method>0.80</jacoco.threshold.method>
+    <jacoco.threshold.instruction>0.90</jacoco.threshold.instruction>
+    <jacoco.threshold.line>0.80</jacoco.threshold.line>
+    <jacoco.threshold.branch>1.00</jacoco.threshold.branch>
+    <jacoco.threshold.complexity>0.80</jacoco.threshold.complexity>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -131,21 +131,15 @@
         <configuration>
           <excludes>
             <!-- Global rules -->
-            <exclude>**/config/*.class</exclude>
-            <exclude>**/exceptions/*.class</exclude>
             <exclude>**/models/**/*.class</exclude>
 
             <!-- Specific directories -->
-            <exclude>**/com/frjgames/dal/ddb/items/*.class</exclude>
-            <exclude>**/com/frjgames/dal/ddb/typeconverters/types/*.class</exclude>
+            <exclude>**/com/frj/auth/lambda/*.class</exclude>
+            <exclude>**/com/frj/auth/app/dal/ddb/*.class</exclude>
 
             <!-- Individual Classes -->
-            <exclude>**/com/frjgames/dal/ddb/accessors/DynamoDbAccessor.class</exclude>
-            <exclude>**/com/frjgames/app/password/PasswordModule.class</exclude>
-            <exclude>**/com/frjgames/app/sessions/SessionModule.class</exclude>
-            <exclude>**/com/frjgames/rest/ApiHandlerModuleSingleton.class</exclude>
-            <exclude>**/com/frjgames/rest/controllers/UserController$CreateUserRestRequest.class</exclude>
-            <exclude>**/com/frjgames/Main.class</exclude>
+            <exclude>**/com/frj/auth/app/AppModule.class</exclude>
+            <exclude>**/com/frj/auth/app/AppModule$Factory.class</exclude>
           </excludes>
         </configuration>
         <executions>

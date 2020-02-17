@@ -5,7 +5,7 @@ aws lambda invoke \
     --payload "{
         \"username\": \"$1\",
         \"password\": \"fake-password-aspo8hgao8ehfa\",
-        \"userSpec\": \"SIMPLE/PIN\"
+        \"spec\": \"SIMPLE/PIN\"
     }" \
     $RESPONSE_JSON_FILE \
 && echo -e "\nResponse paylod:" \

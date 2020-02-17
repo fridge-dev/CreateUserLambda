@@ -23,7 +23,7 @@ public class CreateUserLambdaHandler implements RequestHandler<CreateUserLambdaR
     }
 
     private CreateUserRequest convertRequest(final CreateUserLambdaRequest input) {
-        final String[] split = input.getUserSpec().split("/");
+        final String[] split = input.getSpec().split("/");
         return new CreateUserRequest(
                 input.getUsername(),
                 input.getPassword(),

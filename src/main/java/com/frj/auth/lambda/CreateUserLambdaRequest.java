@@ -11,7 +11,7 @@ public class CreateUserLambdaRequest {
 
     private String username;
     private String password;
-    private String userSpec;
+    private String spec;
 
     public String getUsername() {
         return username;
@@ -29,11 +29,11 @@ public class CreateUserLambdaRequest {
         this.password = Objects.requireNonNull(password);
     }
 
-    public String getUserSpec() {
-        return userSpec;
+    public String getSpec() {
+        return spec;
     }
 
-    public void setUserSpec(final String userSpec) {
-        this.userSpec = Objects.requireNonNull(userSpec);
+    public void setSpec(final String spec) {
+        this.spec = Objects.requireNonNull(spec);
     }
 }

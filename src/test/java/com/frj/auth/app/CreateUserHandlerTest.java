@@ -27,6 +27,7 @@ class CreateUserHandlerTest {
         final CreateUserReply reply = createUserHandler.createUser(req);
 
         assertNotNull(reply);
+        assertNotNull(reply.getFailureMessage());
     }
 
 }
