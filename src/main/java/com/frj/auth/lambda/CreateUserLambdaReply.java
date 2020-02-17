@@ -1,11 +1,11 @@
 package com.frj.auth.lambda;
 
 /**
- * Top level output.
+ * Lambda (presentation layer) output for {@link CreateUserLambdaHandler}.
  *
  * @author fridge
  */
-public class CreateUserInvokeReply {
+public class CreateUserLambdaReply {
 
     private String failureMessage;
 

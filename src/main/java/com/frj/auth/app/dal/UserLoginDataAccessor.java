@@ -1,11 +1,11 @@
-package com.frj.auth.lib.dal;
+package com.frj.auth.app.dal;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.IDynamoDBMapper;
-import com.frj.auth.lib.dal.ddb.DdbExceptionTranslator;
-import com.frj.auth.lib.dal.ddb.DdbExpressionFactory;
-import com.frj.auth.lib.dal.ddb.DynamoDbAccessor;
-import com.frj.auth.lib.dal.ddb.UserDdbItem;
+import com.frj.auth.app.dal.ddb.DdbExceptionTranslator;
+import com.frj.auth.app.dal.ddb.DdbExpressionFactory;
+import com.frj.auth.app.dal.ddb.DynamoDbAccessor;
+import com.frj.auth.app.dal.ddb.UserLoginCredsDdbItem;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,15 +20,15 @@ public class UserLoginDataAccessor implements DataAccessor<UserLoginDataKey, Use
 
     private static final String CREATE_USER_CONDITION_FAILED_MESSAGE = "Failed to create user because username is already taken.";
 
-    private static final DynamoDBSaveExpression SAVE_CONDITION = DdbExpressionFactory.newSaveExpressionItemDoesntExist(UserDdbItem.COL_USER_ID);
+    private static final DynamoDBSaveExpression SAVE_CONDITION = DdbExpressionFactory.newSaveExpressionItemDoesntExist(UserLoginCredsDdbItem.COL_USERNAME);
 
-    private final DynamoDbAccessor<UserDdbItem> ddbAccessor;
+    private final DynamoDbAccessor<UserLoginCredsDdbItem> ddbAccessor;
 
     public static UserLoginDataAccessor getAccessor(final IDynamoDBMapper dynamoDbMapper) {
-        return new UserLoginDataAccessor(new DynamoDbAccessor<>(dynamoDbMapper, UserDdbItem.class));
+        return new UserLoginDataAccessor(new DynamoDbAccessor<>(dynamoDbMapper, UserLoginCredsDdbItem.class));
     }
 
-    private UserLoginDataAccessor(final DynamoDbAccessor<UserDdbItem> ddbAccessor) {
+    private UserLoginDataAccessor(final DynamoDbAccessor<UserLoginCredsDdbItem> ddbAccessor) {
         this.ddbAccessor = Objects.requireNonNull(ddbAccessor);
     }
 
@@ -37,8 +37,7 @@ public class UserLoginDataAccessor implements DataAccessor<UserLoginDataKey, Use
      */
     @Override
     public void create(final UserLoginData userLoginData) {
-        UserDdbItem item = domainTypeToItem(userLoginData);
-
+        UserLoginCredsDdbItem item = domainTypeToItem(userLoginData);
 
         DdbExceptionTranslator.conditionalWrite(
                 () -> ddbAccessor.saveItem(item, SAVE_CONDITION),
@@ -46,17 +45,17 @@ public class UserLoginDataAccessor implements DataAccessor<UserLoginDataKey, Use
         );
     }
 
-    private UserDdbItem domainTypeToItem(final UserLoginData userLoginData) {
-        UserDdbItem item = new UserDdbItem();
+    private UserLoginCredsDdbItem domainTypeToItem(final UserLoginData userLoginData) {
+        UserLoginCredsDdbItem item = new UserLoginCredsDdbItem();
 
-        item.setUserId(userLoginData.getUsername());
+        item.setUsername(userLoginData.getUsername());
         item.setPassword(userLoginData.getPassword());
 
         return item;
     }
 
     /**
-     * Load user by the unique username (i.e. user ID).
+     * Load user by the unique username.
      */
     @Override
     public Optional<UserLoginData> load(final UserLoginDataKey key) {
@@ -64,7 +63,7 @@ public class UserLoginDataAccessor implements DataAccessor<UserLoginDataKey, Use
                 .map(this::itemToDomainType);
     }
 
-    private UserLoginData itemToDomainType(final UserDdbItem item) {
-        return new UserLoginData(item.getUserId(), item.getPassword());
+    private UserLoginData itemToDomainType(final UserLoginCredsDdbItem item) {
+        return new UserLoginData(item.getUsername(), item.getPassword());
     }
 }

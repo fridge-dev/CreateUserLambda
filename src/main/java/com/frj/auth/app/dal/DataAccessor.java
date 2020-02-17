@@ -1,4 +1,4 @@
-package com.frj.auth.lib.dal;
+package com.frj.auth.app.dal;
 
 import java.util.Optional;
 

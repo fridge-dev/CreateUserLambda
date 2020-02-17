@@ -1,4 +1,4 @@
-package com.frj.auth.lib.dal;
+package com.frj.auth.app.dal;
 
 /**
  * Base exception class to throw when something bad happens in the DAL.

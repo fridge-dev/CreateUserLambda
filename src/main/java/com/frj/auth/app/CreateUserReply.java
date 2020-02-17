@@ -1,11 +1,11 @@
-package com.frj.auth.lib;
+package com.frj.auth.app;
 
 import java.util.Objects;
 
 /**
- * TODO
+ * The application model response for {@link CreateUserHandler}.
  *
- * @author TODO
+ * @author fridge
  */
 public class CreateUserReply {
 

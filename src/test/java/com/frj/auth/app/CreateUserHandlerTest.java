@@ -1,18 +1,18 @@
-package com.frj.auth.lib;
+package com.frj.auth.app;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.frj.auth.lib.dal.UserLoginDataAccessor;
+import com.frj.auth.app.dal.UserLoginDataAccessor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class UserCreatorTest {
+class CreateUserHandlerTest {
 
-    private UserCreator userCreator;
+    private CreateUserHandler createUserHandler;
 
     @BeforeEach
     void setup() {
-        userCreator = new UserCreator(UserLoginDataAccessor.getAccessor(new FakeDynamoDBMapper()));
+        createUserHandler = new CreateUserHandler(UserLoginDataAccessor.getAccessor(new FakeDynamoDBMapper()));
     }
 
     @Test
@@ -24,7 +24,7 @@ class UserCreatorTest {
                 CreateUserRequest.PasswordSpec.PIN
         );
 
-        final CreateUserReply reply = userCreator.createUser(req);
+        final CreateUserReply reply = createUserHandler.createUser(req);
 
         assertNotNull(reply);
     }

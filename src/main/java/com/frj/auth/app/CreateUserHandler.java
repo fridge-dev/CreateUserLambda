@@ -1,26 +1,28 @@
-package com.frj.auth.lib;
+package com.frj.auth.app;
 
-import com.frj.auth.lib.dal.DataAccessor;
-import com.frj.auth.lib.dal.UserLoginDataKey;
-import com.frj.auth.lib.dal.UserLoginData;
+import com.frj.auth.app.dal.DataAccessor;
+import com.frj.auth.app.dal.UserLoginDataKey;
+import com.frj.auth.app.dal.UserLoginData;
 import java.util.Objects;
 
 /**
- * TODO
+ * The application layer business logic for creating a user.
  *
- * @author TODO
+ * @author fridge
  */
-public class UserCreator {
+public class CreateUserHandler {
 
     private final DataAccessor<UserLoginDataKey, UserLoginData> userLoginDataAccessor;
 
-    public UserCreator(final DataAccessor<UserLoginDataKey, UserLoginData> userLoginDataAccessor) {
+    public CreateUserHandler(final DataAccessor<UserLoginDataKey, UserLoginData> userLoginDataAccessor) {
         this.userLoginDataAccessor = Objects.requireNonNull(userLoginDataAccessor);
     }
 
     public CreateUserReply createUser(final CreateUserRequest createUserRequest) {
+        userLoginDataAccessor.create(new UserLoginData(createUserRequest.getUsername(), createUserRequest.getPassword()));
+
         final String msg = String.format(
-                "You want me to create user %s with pw %s and spec %s / %s? Frick no!",
+                "You want me to create user %s with pw %s and spec %s / %s? Frick no! (because we don't have DB support)",
                 createUserRequest.getUsername(),
                 createUserRequest.getPassword(),
                 createUserRequest.getUsernameSpec(),

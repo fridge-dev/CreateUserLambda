@@ -1,4 +1,4 @@
-package com.frj.auth.lib;
+package com.frj.auth.app;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDeleteExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;

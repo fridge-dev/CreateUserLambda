@@ -1,7 +1,7 @@
-package com.frj.auth.lib.dal.ddb;
+package com.frj.auth.app.dal.ddb;
 
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
-import com.frj.auth.lib.dal.ConditionalWriteException;
+import com.frj.auth.app.dal.ConditionalWriteException;
 
 /**
  * This class is responsible for translating DynamoDB SDK exceptions to our custom DAL layer exceptions.

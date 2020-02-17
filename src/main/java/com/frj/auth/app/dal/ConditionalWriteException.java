@@ -1,4 +1,4 @@
-package com.frj.auth.lib.dal;
+package com.frj.auth.app.dal;
 
 /**
  * Exception thrown when a DB write fails a server-side conditional check.

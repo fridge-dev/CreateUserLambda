@@ -3,11 +3,11 @@ package com.frj.auth.lambda;
 import java.util.Objects;
 
 /**
- * Top level input.
+ * Lambda (presentation layer) input for {@link CreateUserLambdaHandler}.
  *
  * @author fridge
  */
-public class CreateUserInvoke {
+public class CreateUserLambdaRequest {
 
     private String username;
     private String password;

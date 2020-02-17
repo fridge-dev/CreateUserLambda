@@ -68,7 +68,7 @@
         </executions>
         <configuration>
           <!-- Is Main class used by lambda? I don't think so.. -->
-          <mainClass>com.frj.auth.lambda.CreateUserInvokeHandler</mainClass>
+          <mainClass>com.frj.auth.lambda.CreateUserLambdaHandler</mainClass>
         </configuration>
       </plugin>
 
