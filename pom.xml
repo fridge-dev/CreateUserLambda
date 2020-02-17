@@ -12,6 +12,7 @@
 
   <dependencies>
 
+    <!-- DynamoDB SDK -->
     <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb -->
     <dependency>
       <groupId>com.amazonaws</groupId>
@@ -19,12 +20,15 @@
       <version>1.11.349</version>
     </dependency>
 
+    <!-- The lambda runtime framework -->
     <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core -->
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-lambda-java-core</artifactId>
       <version>1.2.0</version>
     </dependency>
+
+    <!-- JUnit 5 (added by IDE) -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -37,6 +41,7 @@
   <build>
     <plugins>
 
+      <!-- Creates a fat JAR containing all of my runtime dependencies -->
       <!-- https://docs.aws.amazon.com/lambda/latest/dg/java-create-jar-pkg-maven-no-ide.html -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -55,23 +60,7 @@
         </executions>
       </plugin>
 
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>java</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <!-- Is Main class used by lambda? I don't think so.. -->
-          <mainClass>com.frj.auth.lambda.CreateUserLambdaHandler</mainClass>
-        </configuration>
-      </plugin>
-
+      <!-- Compiler -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -84,4 +73,5 @@
 
     </plugins>
   </build>
+
 </project>
