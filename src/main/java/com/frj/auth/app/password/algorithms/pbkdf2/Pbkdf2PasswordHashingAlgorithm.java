@@ -23,6 +23,7 @@ import javax.crypto.spec.PBEKeySpec;
 public class Pbkdf2PasswordHashingAlgorithm implements PasswordHashingAlgorithm {
 
     private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
+    private static final SecretKeyFactory PBKDF2_SECRET_KEY_FACTORY = instantiateSecretKeyFactory();
     private static final SecureRandom RANDOM = new SecureRandom();
 
     private static final int BITS_PER_BYTE = 8;
@@ -47,16 +48,9 @@ public class Pbkdf2PasswordHashingAlgorithm implements PasswordHashingAlgorithm 
                 params.getHashLength() * BITS_PER_BYTE
         );
 
-        SecretKeyFactory secretKeyFactory;
-        try {
-            secretKeyFactory = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            throw new CannotPerformHashException("Hashing algorithm not supported.", e);
-        }
-
         SecretKey secretKey;
         try {
-            secretKey = secretKeyFactory.generateSecret(keySpec);
+            secretKey = PBKDF2_SECRET_KEY_FACTORY.generateSecret(keySpec);
         } catch (InvalidKeySpecException e) {
             throw new CannotPerformHashException("Hashing key spec is invalid.", e);
         }
@@ -79,5 +73,13 @@ public class Pbkdf2PasswordHashingAlgorithm implements PasswordHashingAlgorithm 
                 salt,
                 /* hash */ null
         );
+    }
+
+    private static SecretKeyFactory instantiateSecretKeyFactory() {
+        try {
+            return SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Hashing algorithm not supported.", e);
+        }
     }
 }
