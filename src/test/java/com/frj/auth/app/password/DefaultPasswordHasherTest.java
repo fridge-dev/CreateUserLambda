@@ -3,8 +3,8 @@ package com.frj.auth.app.password;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,14 +22,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 /**
- * Tests the {@link PasswordHasherImpl} class.
+ * Tests the {@link DefaultPasswordHasher} class.
  *
  * @author fridge
  */
-class PasswordHasherImplTest {
+class DefaultPasswordHasherTest {
 
     @InjectMocks
-    private PasswordHasherImpl passwordHasher;
+    private DefaultPasswordHasher passwordHasher;
 
     @Mock
     private PasswordHashingAlgorithm injectedPasswordHashingAlgorithm;

@@ -2,7 +2,7 @@ package com.frj.auth.app.password.algorithms.pbkdf2;
 
 import com.frj.auth.app.password.algorithms.AlgorithmType;
 import com.frj.auth.app.password.algorithms.PasswordHashingAlgorithm;
-import com.frj.auth.app.password.models.CannotPerformHashException;
+import com.frj.auth.app.password.models.PasswordHashException;
 import com.frj.auth.app.password.models.PasswordHashParams;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -40,7 +40,7 @@ public class Pbkdf2PasswordHashingAlgorithm implements PasswordHashingAlgorithm 
      * @inheritDoc
      */
     @Override
-    public byte[] hash(final String password, final PasswordHashParams params) throws CannotPerformHashException {
+    public byte[] hash(final String password, final PasswordHashParams params) throws PasswordHashException {
         PBEKeySpec keySpec = new PBEKeySpec(
                 password.toCharArray(),
                 params.getSalt(),
@@ -52,7 +52,7 @@ public class Pbkdf2PasswordHashingAlgorithm implements PasswordHashingAlgorithm 
         try {
             secretKey = PBKDF2_SECRET_KEY_FACTORY.generateSecret(keySpec);
         } catch (InvalidKeySpecException e) {
-            throw new CannotPerformHashException("Hashing key spec is invalid.", e);
+            throw new PasswordHashException("Hashing key spec is invalid.", e);
         }
 
         return secretKey.getEncoded();

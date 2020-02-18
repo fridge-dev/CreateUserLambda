@@ -19,7 +19,7 @@ import java.util.Optional;
  *
  * @author fridge
  */
-/* TODO make private */ public final class UserLoginDataAccessor implements DataAccessor<UserLoginDataKey, UserLoginData> {
+/* PRIVATE */ final class UserLoginDataAccessor implements DataAccessor<UserLoginDataKey, UserLoginData> {
 
     private static final String CREATE_USER_CONDITION_FAILED_MESSAGE = "Failed to create user because username is already taken.";
 

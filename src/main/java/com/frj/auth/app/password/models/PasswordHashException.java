@@ -7,14 +7,14 @@ import com.frj.auth.app.password.PasswordHasher;
  *
  * @author fridge
  */
-public class CannotPerformHashException extends Exception {
-    public CannotPerformHashException(final String message, final Throwable cause) {
+public class PasswordHashException extends Exception {
+    public PasswordHashException(final String message, final Throwable cause) {
         super(message, cause);
     }
-    public CannotPerformHashException(final String message) {
+    public PasswordHashException(final String message) {
         super(message);
     }
-    public CannotPerformHashException(final Throwable cause) {
+    public PasswordHashException(final Throwable cause) {
         super(cause);
     }
 }

@@ -1,6 +1,6 @@
 package com.frj.auth.app.password.algorithms;
 
-import com.frj.auth.app.password.models.InvalidHashException;
+import com.frj.auth.app.password.models.PasswordHashException;
 import com.frj.auth.app.password.models.PasswordHashParams;
 import java.util.Base64;
 
@@ -38,7 +38,7 @@ public class HashParamsEncoder {
     /**
      * Encode the hash digest and configuration params into a single String that can be used for persistence.
      */
-    public String encodeHash(final PasswordHashParams params) throws InvalidHashException {
+    public String encodeHash(final PasswordHashParams params) throws PasswordHashException {
         String[] encodedParams = new String[NUM_SPLITS];
         encodedParams[INDEX_VERSION] = VERSION;
         encodedParams[INDEX_ALGORITHM] = encodeAlgorithm(params.getAlgorithm());
@@ -55,7 +55,7 @@ public class HashParamsEncoder {
     /**
      * Decode the encoded hash digest and configuration params from the encoding performed in {@link #encodeHash(PasswordHashParams)}.
      */
-    public PasswordHashParams decodeHash(final String encodedHash) throws InvalidHashException {
+    public PasswordHashParams decodeHash(final String encodedHash) throws PasswordHashException {
         checkArg(encodedHash != null, "Can't decode a blank hash digest.");
 
         String[] split = encodedHash.split(DELIMITER);
@@ -83,30 +83,30 @@ public class HashParamsEncoder {
         );
     }
 
-    private String encodeAlgorithm(final AlgorithmType algorithm) throws InvalidHashException {
+    private String encodeAlgorithm(final AlgorithmType algorithm) throws PasswordHashException {
         checkArg(null != algorithm, "Missing algorithm type.");
         return algorithm.name();
     }
 
-    private AlgorithmType decodeAlgorithm(final String algorithmStr) throws InvalidHashException {
+    private AlgorithmType decodeAlgorithm(final String algorithmStr) throws PasswordHashException {
         try {
             return AlgorithmType.valueOf(algorithmStr);
         } catch (IllegalArgumentException | NullPointerException e) {
-            throw new InvalidHashException(String.format("Invalid hash algorithm '%s' in the encoded string", algorithmStr));
+            throw new PasswordHashException(String.format("Invalid hash algorithm '%s' in the encoded string", algorithmStr));
         }
     }
 
-    private String encodeInteger(final int integer) throws InvalidHashException {
+    private String encodeInteger(final int integer) throws PasswordHashException {
         checkArg(integer > 0, "Integer must be greater than 0.");
         return Integer.toString(integer);
     }
 
-    private int decodeInteger(final String intString) throws InvalidHashException {
+    private int decodeInteger(final String intString) throws PasswordHashException {
         int i;
         try {
             i = Integer.parseInt(intString);
         } catch (NumberFormatException e) {
-            throw new InvalidHashException(String.format("'%s' is not a valid int.", intString), e);
+            throw new PasswordHashException(String.format("'%s' is not a valid int.", intString), e);
         }
 
         checkArg(i > 0, "Integer decoded from string must be greater than 0.");
@@ -114,7 +114,7 @@ public class HashParamsEncoder {
         return i;
     }
 
-    private String encodeBytes(final byte[] bytes) throws InvalidHashException {
+    private String encodeBytes(final byte[] bytes) throws PasswordHashException {
         checkArg(bytes != null && bytes.length != 0, "Bytes array must be non-empty.");
 
         String encodedBytes = B64_ENCODER.encodeToString(bytes);
@@ -125,14 +125,14 @@ public class HashParamsEncoder {
         return encodedBytes;
     }
 
-    private byte[] decodeBytes(final String string) throws InvalidHashException {
+    private byte[] decodeBytes(final String string) throws PasswordHashException {
         checkArg(string != null && !string.isBlank(), "Can't decode blank string into bytes.");
         return B64_DECODER.decode(string);
     }
 
-    private void checkArg(final boolean condition, final String message, final Object... args) throws InvalidHashException {
+    private void checkArg(final boolean condition, final String message, final Object... args) throws PasswordHashException {
         if (!condition) {
-            throw new InvalidHashException(String.format(message, args));
+            throw new PasswordHashException(String.format(message, args));
         }
     }
 }

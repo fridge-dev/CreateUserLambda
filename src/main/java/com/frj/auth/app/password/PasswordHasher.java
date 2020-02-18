@@ -2,8 +2,7 @@ package com.frj.auth.app.password;
 
 import com.frj.auth.app.password.algorithms.HashParamsEncoder;
 import com.frj.auth.app.password.algorithms.pbkdf2.Pbkdf2PasswordHashingAlgorithm;
-import com.frj.auth.app.password.models.CannotPerformHashException;
-import com.frj.auth.app.password.models.InvalidHashException;
+import com.frj.auth.app.password.models.PasswordHashException;
 
 /**
  * This class is responsible for creating a secure hash of a password that can be stored in a database and used for user authentication.
@@ -19,18 +18,26 @@ public interface PasswordHasher {
      *
      * The returned hash should be used in the method {@link #matches(String, String)} to verify a login.
      */
-    String createStorableHash(final String password) throws InvalidHashException, CannotPerformHashException;
+    String createStorableHash(final String password) throws PasswordHashException;
 
     /**
      * Determine if the provided password matches the provided hash. This can be used to verify a user login attempt (password) against
      * the correct password hash stored in a database. It is assumed that the provided "correct" hash is encoded by what was returned
      * from the {@link #createStorableHash(String)} method.
      */
-    boolean matches(final String rawPassword, final String correctHash) throws InvalidHashException, CannotPerformHashException;
+    boolean matches(final String rawPassword, final String correctHash) throws PasswordHashException;
 
+    /**
+     * Module responsible for configuring and instantiating instances of {@link PasswordHasher}.
+     */
     class Factory {
         public static PasswordHasher create() {
-            return new PasswordHasherImpl(new Pbkdf2PasswordHashingAlgorithm(), new HashParamsEncoder());
+            return new SanityCheckingPasswordHasher(
+                    new DefaultPasswordHasher(
+                            new Pbkdf2PasswordHashingAlgorithm(),
+                            new HashParamsEncoder()
+                    )
+            );
         }
     }
 

@@ -9,11 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Functional integ test for {@link PasswordHasherImpl} class.
+ * Functional integ test for {@link PasswordHasher} module.
  *
  * @author fridge
  */
-class PasswordHasherImplIntegTest {
+class PasswordHasherIntegTest {
 
     private PasswordHasher passwordHasher;
 

@@ -2,8 +2,7 @@ package com.frj.auth.app.password;
 
 import com.frj.auth.app.password.algorithms.HashParamsEncoder;
 import com.frj.auth.app.password.algorithms.PasswordHashingAlgorithm;
-import com.frj.auth.app.password.models.CannotPerformHashException;
-import com.frj.auth.app.password.models.InvalidHashException;
+import com.frj.auth.app.password.models.PasswordHashException;
 import com.frj.auth.app.password.models.PasswordHashParams;
 import java.util.Objects;
 
@@ -21,13 +20,13 @@ import java.util.Objects;
  *
  * @author fridge
  */
-/* PRIVATE */ class PasswordHasherImpl implements PasswordHasher {
+/* PRIVATE */ class DefaultPasswordHasher implements PasswordHasher {
 
     private final PasswordHashingAlgorithm algorithm;
 
     private final HashParamsEncoder hashEncoder;
 
-    PasswordHasherImpl(final PasswordHashingAlgorithm algorithm, final HashParamsEncoder hashEncoder) {
+    DefaultPasswordHasher(final PasswordHashingAlgorithm algorithm, final HashParamsEncoder hashEncoder) {
         this.algorithm = Objects.requireNonNull(algorithm);
         this.hashEncoder = Objects.requireNonNull(hashEncoder);
     }
@@ -38,13 +37,13 @@ import java.util.Objects;
      *
      * The returned hash should be used in the method {@link #matches(String, String)} to verify a login.
      */
-    public String createStorableHash(final String password) throws InvalidHashException, CannotPerformHashException {
+    public String createStorableHash(final String password) throws PasswordHashException {
         PasswordHashParams paramsWithHash = createHash(password);
 
         return hashEncoder.encodeHash(paramsWithHash);
     }
 
-    private PasswordHashParams createHash(final String password) throws CannotPerformHashException {
+    private PasswordHashParams createHash(final String password) throws PasswordHashException {
         PasswordHashParams params = algorithm.newHashParams();
 
         byte[] hash = algorithm.hash(password, params);
@@ -57,7 +56,7 @@ import java.util.Objects;
      * the correct password hash stored in a database. It is assumed that the provided "correct" hash is encoded by what was returned
      * from the {@link #createStorableHash(String)} method.
      */
-    public boolean matches(final String rawPassword, final String correctHash) throws InvalidHashException, CannotPerformHashException {
+    public boolean matches(final String rawPassword, final String correctHash) throws PasswordHashException {
         PasswordHashParams params = hashEncoder.decodeHash(correctHash);
 
         byte[] actualHash = algorithm.hash(rawPassword, params);

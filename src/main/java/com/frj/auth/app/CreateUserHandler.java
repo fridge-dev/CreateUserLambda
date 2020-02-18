@@ -1,11 +1,10 @@
 package com.frj.auth.app;
 
 import com.frj.auth.app.dal.models.DataAccessor;
-import com.frj.auth.app.dal.models.UserLoginDataKey;
 import com.frj.auth.app.dal.models.UserLoginData;
+import com.frj.auth.app.dal.models.UserLoginDataKey;
 import com.frj.auth.app.password.PasswordHasher;
-import com.frj.auth.app.password.models.CannotPerformHashException;
-import com.frj.auth.app.password.models.InvalidHashException;
+import com.frj.auth.app.password.models.PasswordHashException;
 import com.frj.auth.app.specs.SpecValidator;
 import java.util.Objects;
 
@@ -42,23 +41,11 @@ public class CreateUserHandler {
     }
 
     private String hashPassword(final String rawPassword) {
-        final String storableHash;
         try {
-            storableHash = passwordHasher.createStorableHash(rawPassword);
-        } catch (InvalidHashException | CannotPerformHashException e) {
-            // TODO
-            throw new RuntimeException("Failed to create hash", e);
+            return passwordHasher.createStorableHash(rawPassword);
+        } catch (PasswordHashException e) {
+            throw new RuntimeException("Failed to create hash for password", e);
         }
-
-        // Sanity check that we hashed correctly.
-        try {
-            passwordHasher.matches(rawPassword, storableHash);
-        } catch (InvalidHashException | CannotPerformHashException e) {
-            // TODO
-            throw new RuntimeException("Failed to validate hash", e);
-        }
-
-        return storableHash;
     }
 
     private void validateRequest(final CreateUserRequest request) {

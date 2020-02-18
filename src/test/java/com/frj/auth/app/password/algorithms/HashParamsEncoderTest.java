@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.frj.auth.app.password.models.InvalidHashException;
+import com.frj.auth.app.password.models.PasswordHashException;
 import com.frj.auth.app.password.models.PasswordHashParams;
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -86,7 +86,7 @@ class HashParamsEncoderTest {
     }
 
     private void validateIllegalArg_EncodeHash(final Consumer<PasswordHashParamsBuilder> modifier) throws Exception {
-        assertThrows(InvalidHashException.class, () -> encoder.encodeHash(newRandomParams(modifier)));
+        assertThrows(PasswordHashException.class, () -> encoder.encodeHash(newRandomParams(modifier)));
     }
 
     @Test
@@ -136,7 +136,7 @@ class HashParamsEncoderTest {
     }
 
     private void validateIllegalArg_DecodeHash(final String encodedHash) throws Exception {
-        assertThrows(InvalidHashException.class, () -> encoder.decodeHash(encodedHash));
+        assertThrows(PasswordHashException.class, () -> encoder.decodeHash(encodedHash));
     }
 
     private PasswordHashParams newRandomParams(final Consumer<PasswordHashParamsBuilder> modifier) {
