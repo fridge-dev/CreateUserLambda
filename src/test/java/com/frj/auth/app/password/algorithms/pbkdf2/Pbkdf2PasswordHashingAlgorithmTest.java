@@ -85,9 +85,6 @@ class Pbkdf2PasswordHashingAlgorithmTest {
         assertNull(params2.getHash());
     }
 
-    // TODO class needs a test to show that verifying a stored hash isn't dependent on current hash generation configuration.
-    // TODO prob a integ test too
-
     private void assertBytesEqual(boolean isEqual, byte[] expected, byte[] actual) {
         String failureMessage = String.format(
                 "Expected the following two arrays to %s be equal:\n%s\n%s",

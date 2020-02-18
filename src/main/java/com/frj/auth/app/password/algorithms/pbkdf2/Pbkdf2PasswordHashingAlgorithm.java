@@ -60,6 +60,8 @@ public class Pbkdf2PasswordHashingAlgorithm implements PasswordHashingAlgorithm 
 
     /**
      * @inheritDoc
+     *
+     * TODO this method can/should be debately decoupled from the #hash method in this class.
      */
     @Override
     public PasswordHashParams newHashParams() {
