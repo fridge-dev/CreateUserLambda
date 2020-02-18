@@ -2,7 +2,6 @@ package com.frj.auth.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.frj.auth.app.AppModule;
 import com.frj.auth.app.CreateUserHandler;
 import com.frj.auth.app.CreateUserReply;
 import com.frj.auth.app.CreateUserRequest;
@@ -15,7 +14,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class CreateUserLambdaHandler implements RequestHandler<CreateUserLambdaRequest, CreateUserLambdaReply> {
 
-    private static final CreateUserHandler USER_CREATOR = AppModule.getInstance().getCreateUserHandler();
+    private final CreateUserHandler userCreator;
+
+    public CreateUserLambdaHandler(final CreateUserHandler userCreator) {
+        this.userCreator = userCreator;
+    }
 
     public CreateUserLambdaReply handleRequest(final CreateUserLambdaRequest invoke, final Context context) {
         final long start = System.nanoTime();
@@ -29,7 +32,7 @@ public class CreateUserLambdaHandler implements RequestHandler<CreateUserLambdaR
 
     private CreateUserLambdaReply doHandle(final CreateUserLambdaRequest invoke) {
         final CreateUserRequest createUserRequest = convertRequest(invoke);
-        final CreateUserReply createUserReply = USER_CREATOR.createUser(createUserRequest);
+        final CreateUserReply createUserReply = userCreator.createUser(createUserRequest);
         return convertReply(createUserReply);
     }
 
