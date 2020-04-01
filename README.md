@@ -2,6 +2,30 @@
 
 This is a repo for a AWS Lambda function to handle user authentication. It's intended audience is for my own personal use on non-productionalized projects.
 
+# Backlog
+
+Generic auth lambda notes copied from sublime text
+
+-- DDB --
+
+UserLogin
+- (Hash) username - String
+- password - String
+
+UserSession
+- (Hash) username - String
+- sessionId - String
+- expiryTimestampMs - long
+
+
+-- Lambda --
+
+CreateUserHandler: {username, password, charsetRequirements(username=(email,simple), passowrd=(pin, complex))} -> {} || failureType(userAlreadyExists, invalidUsernameChars, invalidPasswordChars, 500)
+UserLoginHandler: {username, password} -> {sessionId, expiryTimestamp} || failureType(wrongCreds, 500)
+UserSessionAuthHandler: {sessionId, expiryTimestamp} -> {userId} || failureType(wrongCreds, 500)
+
+probably need a generic failure response type
+
 # Resource Creation (a working doc...)
 
 Because I am too lazy to learn CloudFormation.
